@@ -10,8 +10,13 @@ library(ggplot2)
 table(reddit_survey1$income.range)
 reddit_survey1$income.range <-ordered(reddit_survey1$income.range, levels = c("Under $20,000", "$20,000 - $29,999","$30,000 - $39,999 ","$40,000 - $49,999" , "$50,000 - $69,999", "$70,000 - $99,999","$100,000 - $149,999 ","$150,000 or more"    ))
 qplot(data = reddit_survey1, x = income.range )+
-  scale_x_discrete(1:7)
+  scale_x_discrete( 1:7)+ 
+  facet_wrap(~income.range, ncol = 3)
 
 table(reddit_survey1$employment.status)
-qplot(data = reddit_survey1, x = employment.status)+
-  scale_x_discrete(1:6)
+qplot(data = reddit_survey1 , x = employment.status,
+      xlab = "Employment status",
+      color = I("black"), fill = I("#099DD9"))+
+  scale_x_discrete(1:6)+
+  facet_wrap(~education, )
+by(reddit_survey1$income.range, reddit_survey1$education, summary)
