@@ -33,8 +33,7 @@ ggplot(mri_alzheimers, aes(Group, EDUC))+
 
 ggplot(mri_alzheimers, aes(CDR, EDUC))+
   geom_col()+
-  ggtitle("CDR by Education")+
-  theme(plot.title = element_text(hjust = .5))
+  facet_wrap(~Age)
 
 
 #Checking the correlation of the various variables but first dropping the non_numeric data
