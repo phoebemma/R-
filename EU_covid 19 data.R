@@ -49,13 +49,30 @@ ggplot(EU_Covid_data, aes(Population/100000, Country, color = Country))+
   geom_col(alpha = 5)+
   ggtitle("Population by country")+
   theme_bw()
-
 #Germany has the highest population. Italy has the third largest population, second highest number of confirmed cases and the highest number of deaths
+
+#visualising the relationship between population and cases across all countries
+ggplot(EU_Covid_data, aes(Confirmed/10000, Population/100000, color = Country))+
+  geom_point(alpha = 5)+
+  ggtitle("Population vs confirmed cases")+
+  theme_bw()
+
+#relationship between number of tests and confirmed cases
+ggplot(EU_Covid_data, aes(Confirmed/10000, Tests/10000, color = Country))+
+  geom_point(alpha = 5)+
+  ggtitle("Population vs confirmed cases")+
+  theme_bw()
+#the correlation between  tests and confirmed cases was not exactly significant
+
+#checking the relationshp per country
+ggplot(EU_Covid_data, aes(Confirmed/10000, Tests/10000, color = Country))+
+  geom_point(alpha = 5)+
+  ggtitle("Tests vs confirmed cases")+
+  theme_bw()+ 
+  facet_wrap(~Country)
 
 #checking a correlation of all the factors
 library(PerformanceAnalytics)
 update_EU_Covid_data <- EU_Covid_data
 update_EU_Covid_data$Country <- NULL
 chart.Correlation(update_EU_Covid_data, histogram = TRUE, method = "pearson")
-
-
