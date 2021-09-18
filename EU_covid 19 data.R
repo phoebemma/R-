@@ -1,3 +1,4 @@
+#EU Covid_19 data sourced from https://www.kaggle.com/prajittr/latest-covid19-cases-eu-countries-data
 getwd()
 setwd("C:/Users/Chidimma E/Downloads")
 EU_Covid_data <-read.csv("EU_COVID_data_15July2021.csv")
@@ -13,6 +14,7 @@ ggplot(data = EU_Covid_data, aes(x = Confirmed/10000, y = Deaths/ 1000, color = 
   geom_jitter(alpha = 2)+
   labs(x = "Confirmed cases x 10000", y ="Deaths x 1000" )+
   theme_bw()
+#The relationship between confirmed cases and deaths are significant (as expected)
   
 #Making visualization easier by splitting into multiple plots
 ggplot(data = EU_Covid_data, aes(x = Confirmed/10000, y = Deaths/ 1000, color = Country))+
@@ -21,7 +23,7 @@ ggplot(data = EU_Covid_data, aes(x = Confirmed/10000, y = Deaths/ 1000, color = 
   facet_wrap(~Country)+
   theme_bw()
 
-#checking correlation of the various variables
+#Comparing the death rates across all EU countries
 EU_Covid_data <- read.csv("EU_COVID_data_15July2021.csv")
 ggplot(EU_Covid_data, aes(Deaths/1000, Country, color = Country))+
   geom_col(alpha = 5)+
@@ -35,6 +37,7 @@ ggplot(EU_Covid_data, aes(Confirmed/10000, Country, color = Country))+
   ggtitle("confirmed cases by country")+
   theme_bw()
 #France recorded the highest number of cases, followed by Italy and Spain
+
 ggplot(EU_Covid_data, aes(Tests/100000, Country, color = Country))+
   geom_col(alpha = 5)+
   ggtitle("Tests by country")+
@@ -49,9 +52,10 @@ ggplot(EU_Covid_data, aes(Population/100000, Country, color = Country))+
 
 #Germany has the highest population. Italy has the third largest population, second highest number of confirmed cases and the highest number of deaths
 
+#checking a correlation of all the factors
 library(PerformanceAnalytics)
-chart.Correlation(updated_EU_Covid_data, histogram = TRUE, method = "pearson")
+update_EU_Covid_data <- EU_Covid_data
+update_EU_Covid_data$Country <- NULL
+chart.Correlation(update_EU_Covid_data, histogram = TRUE, method = "pearson")
 
-qplot(data = EU_Covid_data, x= Deaths/1000, y = Confirmed/ 10000, color = "blue", alpha = 5)+
-  facet_wrap(~Country)+
-  labs(y = "Confirmed Covid-19 cases", x = "Deaths")
+
