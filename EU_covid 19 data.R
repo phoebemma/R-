@@ -64,12 +64,23 @@ ggplot(EU_Covid_data, aes(Confirmed/10000, Tests/10000, color = Country))+
   theme_bw()
 #the correlation between  tests and confirmed cases was not exactly significant
 
-#checking the relationshp per country
+#checking the relationship per country
 ggplot(EU_Covid_data, aes(Confirmed/10000, Tests/10000, color = Country))+
   geom_point(alpha = 5)+
   ggtitle("Tests vs confirmed cases")+
   theme_bw()+ 
   facet_wrap(~Country)
+
+cor.test(EU_Covid_data$Population, EU_Covid_data$Confirmed)
+#Highly significant correlation between population and confirmed cases
+
+#checking same for population and tests
+cor.test(EU_Covid_data$Population, EU_Covid_data$Tests)
+#Relatively significant relationship
+
+#checking for population and Death
+cor.test(EU_Covid_data$Population, EU_Covid_data$Deaths)
+#Apparently, the larger the population, the more the recorded cases and the more the deaths
 
 #checking a correlation of all the factors
 library(PerformanceAnalytics)
