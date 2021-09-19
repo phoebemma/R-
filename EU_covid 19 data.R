@@ -56,7 +56,12 @@ ggplot(EU_Covid_data, aes(Confirmed/10000, Population/100000, color = Country))+
   geom_point(alpha = 5)+
   ggtitle("Population vs confirmed cases")+
   theme_bw()
+#checking the same relationship using geom_line
+ggplot(EU_Covid_data, aes(Confirmed/1000, Population/100000))+
+  geom_line(alpha = 5)+
+  ggtitle("Population vs confirmed cases")
 
+ggplot
 #relationship between number of tests and confirmed cases
 ggplot(EU_Covid_data, aes(Confirmed/10000, Tests/10000, color = Country))+
   geom_point(alpha = 5)+
