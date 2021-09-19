@@ -1,3 +1,4 @@
+#analysing dataset sourced from https://www.kaggle.com/mostafaeltalawy/mri-and-alzheimers
 getwd()
 mri_alzheimers <- read.csv("oasis_longitudinal.csv")
 # Exploring the nature of the data
