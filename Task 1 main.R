@@ -19,6 +19,7 @@ library(ggplot2)
 library(ggcorrplot)
 library(GGally)
 library (RColorBrewer)
+library(factoextra)
 
 dev.off()
 #checking the distribution of the variable "quality" across the dataset
@@ -56,6 +57,32 @@ subset_wine_data %>%
           axisLabels="none", switch="both")
 
 
+#running a principle component anaylses (PCA)
+subset_data_pcr <- prcomp(subset_wine_data, center = TRUE, scale = TRUE)
+summary(subset_data_pcr)
+
+
+screeplot(subset_data_pcr, type = "l", npcs = 15, main = "Screeplot of the principal components")
+abline(h = 1, col="red", lty=5)
+legend("topright", legend=c("Eigenvalue = 1"),
+       col=c("red"), lty=5, cex=0.6)
+
+#checking the variation explained
+variation_explained = subset_data_pcr$sdev^2 / sum(subset_data_pcr$sdev^2)
+#to see the exact percentage variance of each principle component
+print(variation_explained)
+
+#presenting this in a plot
+qplot(c(1:12), variation_explained)+
+  geom_line()+
+  xlab("Principal component")+
+  ylab("Variation explained")
+
+#both graph and figures reveal that only the first 4 principle components have Eigenvalues > 1 (accounting for 67%of the variance), the next three components have Eigenvalues that can be rounded off to one (ie PC 5:7) and account for 21% of the variance. So i think it is say to say that the first 7 components explain the variation
+#basically, 7 variables explain 81% of the variance
+
+
+
 #For personal reasons, I am curious to see if the information from the data subset is representative of the entire dataset
 qplot(data = wine_quality_data_parsed, x = quality, bins = 12)
 #The data generated shows that most of the wines sampled fell in the range 5 and 6
@@ -89,3 +116,16 @@ wine_quality_data_parsed %>%
           axisLabels="none", switch="both")
 #the result from the subset differed from the full dataset. 
 
+wine_quality_data_parsed_pcr <- prcomp(wine_quality_data_parsed, center = TRUE, scale = TRUE)
+summary(wine_quality_data_parsed_pcr)
+
+#the PCA analyses on the subset data agrees with that from the full dataset
+variation_explained_full_dataset = wine_quality_data_parsed_pcr$sdev^2 / sum(wine_quality_data_parsed_pcr$sdev^2)
+#to see the exact percentage variance of each principle component
+print(variation_explained_full_dataset)
+
+#presenting this in a plot
+qplot(c(1:12), variation_explained_full_dataset)+
+  geom_line()+
+  xlab("Principal component")+
+  ylab("Variation explained")
