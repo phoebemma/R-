@@ -5,7 +5,10 @@ wine_quality_data <- read.csv("winequality-red.csv")
 
 #Data looks really messy and on closer observation  it is a semi-colon-separated file.Analysis cannont be run on it like this, thus the need for data parsing
 wine_quality_data_parsed <- read.csv("winequality-red.csv", sep = ";")
+
 #Now, taking a look at the data reveals 1599 observations and 12 variables
+
+#sneek peak of the data
 dim(wine_quality_data_parsed)
 summary(wine_quality_data_parsed)
 
@@ -23,7 +26,7 @@ library(factoextra)
 
 dev.off()
 #checking the distribution of the variable "quality" across the dataset
-qplot(data = subset_wine_data, x = quality, alpha = 0.2, bins = 10)
+qplot(data = subset_wine_data, x = quality, alpha = 3, bins = 8)
 
 #More of the samples fell within quality variable of 5
 #confirming this using summary statistics
@@ -31,6 +34,7 @@ summary(subset_wine_data$quality)
 
 #summary statistics of all the data in the subset
 summary(subset_wine_data)
+
 
 #checking for correlation between the variable "quality" and the others
 corrr <- round(cor(subset_wine_data), 1)
@@ -62,7 +66,8 @@ subset_data_pcr <- prcomp(subset_wine_data, center = TRUE, scale = TRUE)
 summary(subset_data_pcr)
 
 
-screeplot(subset_data_pcr, type = "l", npcs = 15, main = "Screeplot of the principal components")
+#plotting a screeplot of the Eigenvalues of the 12 variables in the data
+screeplot(subset_data_pcr, type = "l", npcs = 12, main = "Screeplot of the principal components")
 abline(h = 1, col="red", lty=5)
 legend("topright", legend=c("Eigenvalue = 1"),
        col=c("red"), lty=5, cex=0.6)
@@ -71,7 +76,7 @@ legend("topright", legend=c("Eigenvalue = 1"),
 variation_explained = subset_data_pcr$sdev^2 / sum(subset_data_pcr$sdev^2)
 #to see the exact percentage variance of each principle component
 print(variation_explained)
-
+ 
 #presenting this in a plot
 qplot(c(1:12), variation_explained)+
   geom_line()+
